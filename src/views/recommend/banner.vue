@@ -150,7 +150,6 @@ export default {
 }
 .i-banner {
   width: 800%;
-  /* animation: 60s move infinite; */
 }
 .i-banner:hover {
   animation-play-state: paused;

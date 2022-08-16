@@ -88,7 +88,7 @@ export default {
   background-color: #f2f2f2;
   padding: 20px 0px 0px;
   border-bottom: 1px solid #b2b2b2;
-  //login上面
+
   .f_cb {
     width: 250px;
     height: 90px;
@@ -108,7 +108,6 @@ export default {
       border: 1px solid #dadada;
     }
 
-    //头像右边
     .info {
       h4 {
         width: 115px;
@@ -141,7 +140,6 @@ export default {
         overflow: hidden;
         text-align: center;
 
-        // background-color: #4892d8;
         border: 1px solid #cccccc;
         border-radius: 4px;
         color: #ffff;

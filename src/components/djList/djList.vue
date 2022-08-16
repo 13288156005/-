@@ -202,10 +202,9 @@ export default {
   padding: 20px 20px 40px;
   border-right: 1px solid #d3d3d3;
 
-  //歌单头部详情
   .playDetail {
     width: 410px;
-    // height: 283px;
+
     margin: 0 0 0 230px;
     display: flex;
     flex-direction: column;
@@ -238,14 +237,14 @@ export default {
       a {
         display: inline-block;
         height: 30px;
-        // width: 66px;
+
         line-height: 31px;
         color: #333333;
         border: 1px solid #c4c4c4;
         border-radius: 5px;
         margin-left: 2px;
         background: #fcfcfc;
-        // text-align: right;
+
         &:nth-child(1) {
           background: url("./img/button2.png") 0 -2516px;
         }
@@ -277,7 +276,7 @@ export default {
         text-overflow: ellipsis;
         height: 98px;
       }
-      //点击详情
+
       .title1 {
         white-space: pre-wrap;
         overflow: hidden;
@@ -297,7 +296,6 @@ export default {
     }
   }
 
-  //歌曲table
   .songTable {
     margin-top: 50px;
     .songHeard {
@@ -384,7 +382,6 @@ export default {
   }
 }
 .page {
-  //居中
   display: flex;
   justify-content: center;
   margin: 40px 0;

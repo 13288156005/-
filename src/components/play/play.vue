@@ -613,7 +613,7 @@ export default {
   position: fixed;
   background-color: #2a2a2a;
   bottom: -50px;
-  //播放器底部动画的效果
+
   transition: bottom 0.5s;
   z-index: 9999;
   display: flex;
@@ -621,7 +621,6 @@ export default {
   .left {
     width: 140px;
     height: 100%;
-    // background-color: yellow;
 
     display: flex;
     justify-content: center;
@@ -633,7 +632,6 @@ export default {
       background: url("./images//playbar.png") no-repeat;
 
       &:nth-child(1) {
-        // background: url("./images//playbar.png") no-repeat;
         background-position: -2px -130px;
         &:hover {
           background-position: -32px -130px;
@@ -644,14 +642,13 @@ export default {
         width: 36px;
         height: 36px;
         margin: 10px;
-        // background: url("./images/playbar.png") no-repeat;
+
         background-position: -2px -205px;
         &:hover {
           background-position: -42px -205px;
         }
       }
       &:nth-child(3) {
-        // background: url("./images//playbar.png") no-repeat;
         background-position: -82px -130px;
         &:hover {
           background-position: -112px -130px;
@@ -659,7 +656,6 @@ export default {
       }
     }
 
-    //点击开始
     .start {
       background-image: url("./images/playbar.png") no-repeat;
       background-position: -2px -166px !important;
@@ -714,14 +710,13 @@ export default {
           background: url("./images/statbar.png") no-repeat;
           position: relative;
 
-          /* 背景为红色进度条 */
           .cur {
             width: 22%;
             height: 10px;
             position: absolute;
             top: 0;
             left: 0%;
-            // 控制进度条
+
             width: 1%;
             background: url("./images/statbar.png") no-repeat 0 9999px;
             background-position: 0 -66px;
@@ -760,7 +755,7 @@ export default {
     height: 100%;
     display: flex;
     position: relative;
-    //音量进度条
+
     .m-vol {
       width: 32px;
       height: 113px;
@@ -769,7 +764,7 @@ export default {
       position: absolute;
       top: -113px;
       visibility: hidden;
-      //
+
       .m-jdt {
         width: 4px;
         height: 100px;
@@ -818,7 +813,6 @@ export default {
       }
     }
 
-    //控制播放器列表显示和隐藏
     .coumPlayList {
       margin-top: 25px;
       margin-left: 10px;
@@ -871,11 +865,10 @@ export default {
   }
   &:hover {
     bottom: 0px;
-    // 动画效果
+
     transition: all 0.5s;
   }
 
-  //播放器的表单，以及歌词
   .playList {
     display: none;
     position: absolute;
@@ -946,7 +939,7 @@ export default {
       display: flex;
       .list_left {
         width: 534px;
-        // background: red;
+
         height: 100%;
         ul::-webkit-scrollbar {
           display: none;
@@ -961,7 +954,7 @@ export default {
             height: 28px;
             color: #9b9b9b;
             font-size: 12px;
-            // background: blue;
+
             display: flex;
             align-items: center;
 

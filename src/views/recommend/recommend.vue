@@ -483,7 +483,6 @@ export default {
 </script>
 
 <style>
-/* css.css */
 body,
 h1,
 h2,
@@ -869,7 +868,6 @@ li:hover .diskplay {
   display: block;
 }
 
-/* index: .css */
 body {
   font-size: 12px;
   color: #333;
@@ -1313,7 +1311,7 @@ a:hover {
   height: 62px;
 }
 
-.s-photo ./img {
+.s-photo .img {
   width: 62px;
   height: 62px;
 }
@@ -1390,13 +1388,13 @@ a:hover {
   height: 50px;
 }
 
-.d-./img {
+.d-.img {
   float: left;
   zoom: 1;
   margin-right: 10px;
 }
 
-.d-./img ./img {
+.d-.img .img {
   width: 40px;
   height: 40px;
 }
@@ -1431,8 +1429,8 @@ a:hover {
 }
 
 .swiper {
-  --swiper-navigation-color: #878787; /* 单独设置按钮颜色 */
-  --swiper-navigation-size: 20px; /* 设置按钮大小 */
+  --swiper-navigation-color: #878787;
+  --swiper-navigation-size: 20px;
 }
 .imgSize {
   width: 62px;

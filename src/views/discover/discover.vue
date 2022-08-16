@@ -715,7 +715,6 @@ export default {
   background: url(./img/table.png) no-repeat 0 -304px;
 }
 
-//排行榜
 .conter_audio {
   .conter_header {
     display: flex;
