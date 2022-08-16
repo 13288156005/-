@@ -32,7 +32,7 @@ export const reqLogin = (phone, password) => request({ url: `/login/cellphone?ph
 export const reqUserDetail = (uid) => request({ url: `/user/detail?uid=${uid}`, method: 'get' })
 
 //退出登录
-export const reqLoginOut = () => request({ url: '/logout', method: 'get' })
+export const reqLoginOut = (data) => request({ url: '/logout', method: 'get', params: data })
 
 //音乐签到
 export const reqMusicSign = (cookie) => request({
@@ -104,3 +104,14 @@ export const reqgetDjDet = (data) => request({ url: '/dj/program', method: 'get'
 
 //获取电台节目详情
 export const reqGetDjSubmit = (id) => request({ url: `/dj/program/detail?id=${id}`, method: 'get' })
+
+//二维码接口
+// 二维码 key 生成接口
+export const reqGetLoginKey = () => request({ url: '/login/qr/key' })
+    // 二维码 url 生成接口
+export const reqGetLoginUrl = (data) => request({ url: '/login/qr/create', params: data })
+    // 二维码检测扫码状态接口
+export const reqGetLoginCheck = (data) => request({ url: '/login/qr/check', params: data })
+
+//获取账号信息
+export const reqGetUserInfo = (data) => request({ url: '/user/account', params: data })

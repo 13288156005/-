@@ -4,10 +4,12 @@ import axios from 'axios';
 //创建axios实例
 let requests = axios.create({
         //基础路径
+        // 本地地址
         // baseURL: "http://localhost:3000",
+        // 线上地址
         baseURL: "https://netease-cloud-music-api-git-master-13288156005.vercel.app",
-        //请求不能超过10s
-        timeout: 10000,
+        //请求不能超过20s
+        timeout: 20000,
         headers: {
             'Content-Type': 'application/json;charset=UTF-8',
             'Accept': 'application/json, text/javascript'

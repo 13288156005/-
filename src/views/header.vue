@@ -21,7 +21,7 @@
           <div class="landing fr">
             <a
               class="link fr"
-              @click="dialogVisible = true"
+              @click="login_pic"
               ref="login"
               v-if="loginMsg.name == ''"
               >登陆</a
@@ -84,48 +84,35 @@
 
     <!-- 登录界面 -->
     <el-dialog
-      title="登录"
+      title="请扫描二维码登录"
       :visible.sync="dialogVisible"
       width="40%"
       @close="closeLogDialog"
       center
     >
-      <!-- 登录数据 -->
-      <el-form
-        :model="dataForm"
-        :rules="formRules"
-        ref="ruleForm"
-        label-width="100px"
-      >
-        <el-form-item label="手机号码" prop="phone">
-          <el-input v-model="dataForm.phone"></el-input>
-        </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="dataForm.password" type="password"></el-input>
-        </el-form-item>
-      </el-form>
-
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="resetLog">重置</el-button>
-        <el-button type="primary" @click="login">登录</el-button>
-      </span>
+      <div class="loginPic">
+        <img :src="qrCodeUrl" />
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
-import { reqLoginOut } from "@/api/index.js";
+import {
+  reqLoginOut,
+  reqGetLoginKey,
+  reqGetLoginUrl,
+  reqGetLoginCheck,
+  reqGetUserInfo,
+  reqUserDetail,
+} from "@/api/index.js";
 export default {
   data() {
     return {
       //控制登录页面的显示和隐藏
       dialogVisible: false,
-      //form表单数据
-      dataForm: {
-        phone: "",
-        password: "",
-      },
+
       loginMsg: {
         name: "",
         id: "",
@@ -136,31 +123,15 @@ export default {
         follows: 0,
         eventCount: 0,
       },
-      //form验证表单
-      formRules: {
-        phone: [
-          { required: true, message: "请输入手机号码", trigger: "blur" },
-          {
-            min: 11,
-            max: 11,
-            message: "请输入正确的手机号码",
-            trigger: "blur",
-          },
-        ],
-        password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          {
-            min: 6,
-            message: "密码至少6位数",
-            trigger: "blur",
-          },
-        ],
-      },
+
       //搜索框数据
       searchInfo: {
         keywords: "",
         type: 1,
       },
+
+      //二维码图片地址
+      qrCodeUrl: "",
     };
   },
   mounted() {
@@ -173,17 +144,9 @@ export default {
   },
   methods: {
     //当关闭登录对话框的回调函数
-    closeLogDialog() {
-      this.dataForm = {
-        phone: "",
-        password: "",
-      };
-      this.$refs.ruleForm.resetFields();
-    },
+    closeLogDialog() {},
     //重置手机号码和密码
-    resetLog() {
-      this.$refs.ruleForm.resetFields();
-    },
+    resetLog() {},
     //成功登录账号
     login() {
       console.log("登录");
@@ -203,7 +166,12 @@ export default {
     },
     //点击退出登录按钮
     logOut() {
-      reqLoginOut();
+      let user = localStorage.getItem("userName");
+      user = JSON.parse(user);
+      let userInfo = {
+        cookie: user.cookie,
+      };
+      reqLoginOut(userInfo);
       localStorage.clear();
       location.reload();
     },
@@ -213,6 +181,70 @@ export default {
         this.$router.push({ path: "/search", query: this.searchInfo });
         this.$store.dispatch("search", this.searchInfo);
       }
+    },
+    //点击登录按钮
+    async login_pic() {
+      const result = await reqGetLoginKey();
+      if (result.data.code !== 200) {
+        return this._vm.$message.error(result.data.message);
+      }
+
+      let key = result.data.data.unikey;
+      let keyInfo = {
+        key: key,
+        qrimg: 1,
+      };
+      const result2 = await reqGetLoginUrl(keyInfo);
+      if (result2.data.code !== 200) {
+        return this._vm.$message.error(result2.data.message);
+      }
+      this.qrCodeUrl = result2.data.data.qrimg;
+      console.log(result2.data);
+      //显示登录对话框
+      this.dialogVisible = true;
+      let timer = setInterval(async () => {
+        //获取时间戳
+        let time = new Date().getTime();
+        let key2Info = {
+          key: key,
+          time: time,
+        };
+        let result3 = await reqGetLoginCheck(key2Info);
+        if (result3.data.code == 803) {
+          this.$message.success("登录成功");
+          //关闭对话框
+          this.dialogVisible = false;
+          console.log(result3);
+          let cookie = result3.data.cookie;
+          //保存到localStrage
+          localStorage.setItem("cookie", cookie);
+          //获取用户信息
+          let userInfo = {
+            cookie: cookie,
+          };
+          const result4 = await reqGetUserInfo(userInfo);
+          let id = result4.data.account.id;
+          const result5 = await reqUserDetail(id);
+          //整理数据
+          this.loginMsg.name = result5.data.profile.nickname;
+          this.loginMsg.id = result5.data.profile.userId;
+          this.loginMsg.imgUrl = result5.data.profile.avatarUrl;
+          this.loginMsg.cookie = cookie;
+          this.loginMsg.followeds = result5.data.profile.followeds;
+          this.loginMsg.follows = result5.data.profile.follows;
+          this.loginMsg.eventCount = result5.data.profile.eventCount;
+          //对象转化为json格式
+          let user = JSON.stringify(this.loginMsg);
+          // 保存到localStrage
+          localStorage.setItem("userName", user);
+          //清除定时器
+          clearInterval(timer);
+          //刷新页面
+          this.$router.go(0);
+
+          return;
+        }
+      }, 3000);
     },
   },
   computed: {
@@ -239,7 +271,7 @@ export default {
 };
 </script>
 
-<style  lang='less'>
+<style  lang='less' scoped>
 .link {
   // display: none;
 }
@@ -255,5 +287,9 @@ export default {
   font-size: 14px;
   margin-top: 8px;
   padding-left: 20px;
+}
+.loginPic {
+  display: flex;
+  justify-content: center;
 }
 </style>
