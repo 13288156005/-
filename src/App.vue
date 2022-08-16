@@ -1,7 +1,10 @@
 <template>
   <div>
     <Header></Header>
-
+    <div class="protect">
+      仅仅是个人学习使用，没有任何商业用途，请勿用于商业用途，谢谢合作！
+      如以侵权行为被投诉，请联系作者，我们将尽快处理！
+    </div>
     <router-view></router-view>
     <Footer></Footer>
     <Play></Play>
@@ -60,4 +63,12 @@ export default {
 </script>
 
 <style>
+.protect {
+  width: 200px;
+  height: 50px;
+  position: absolute;
+  left: 50px;
+  top: 600px;
+  z-index: 999;
+}
 </style>
