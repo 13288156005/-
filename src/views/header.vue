@@ -41,12 +41,11 @@
               >退出登录</a
             >
           </div>
-          <form class="search fr">
+          <form class="search fr" @submit.prevent="search">
             <input
               type="text"
               class=""
               placeholder="单曲/歌手/专辑/歌单/MV/用户"
-              @keyup.enter="search"
               v-model="searchInfo.keywords"
             />
           </form>
@@ -177,9 +176,8 @@ export default {
     },
     //搜索框搜索
     search() {
-      if (this.$route.path != "/search") {
+      if (this.searchInfo.keywords != "") {
         this.$router.push({ path: "/search", query: this.searchInfo });
-        this.$store.dispatch("search", this.searchInfo);
       }
     },
     //点击登录按钮

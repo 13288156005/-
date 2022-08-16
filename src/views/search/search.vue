@@ -15,10 +15,14 @@
         </el-input>
 
         <div class="table">
-          <p>
+          <!-- <p>
             搜索"{{ searchInfo.keywords }}"，找到<em>{{
-              search.result.songCount || search.result.playlistCount
+              search.result.songCount || search.result.playlistCount || ""
             }}</em
+            >首单曲
+          </p> -->
+          <p>
+            搜索"{{ searchInfo.keywords }}"，找到<em>{{ searchTotal || "" }}</em
             >首单曲
           </p>
           <ul class="table_ul">
@@ -139,12 +143,7 @@
               @next-click="nextPage"
               @prev-click="prevPage"
               @current-change="currentPage"
-              :total="
-                search.result.songCount ||
-                search.result.playlistCount ||
-                search.result.artistCount ||
-                search.result.albumCount
-              "
+              :total="searchTotal"
               :page-size="30"
             >
             </el-pagination>
@@ -256,6 +255,16 @@ export default {
           });
           return arr;
         } catch (e) {}
+      }
+    },
+    searchTotal: function () {
+      if (Object.keys(this.search).length > 0) {
+        return (
+          this.search.result.songCount ||
+          this.search.result.playlistCount ||
+          this.search.result.artistCount ||
+          this.search.result.albumCount
+        );
       }
     },
 

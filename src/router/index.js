@@ -36,6 +36,7 @@ const routes = [{
     },
     {
         path: '/search',
+        props: true,
         component: search,
     },
     {
