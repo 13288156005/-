@@ -272,7 +272,10 @@
                 <li v-for="(hotArt, index) in hotArtists" :key="index">
                   <a href="javascript:;">
                     <div class="s-photo">
-                      <img :src="hotArt.picUrl" class="imgSize" />
+                      <img
+                        :src="hotArt.picUrl + '?param=60y60'"
+                        class="imgSize"
+                      />
                     </div>
                     <div class="s-info">
                       <h4>{{ hotArt.name }}</h4>
