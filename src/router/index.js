@@ -10,6 +10,7 @@ import search from "@/views/search/search.vue"
 import discover from "@/views/discover/discover.vue"
 import djList from '@/components/djList/djList.vue'
 import djShow from '@/components/djShow/djShow.vue'
+import songAsg from '@/components/songAsg/songAsg'
 
 Vue.use(VueRouter)
 
@@ -52,6 +53,11 @@ const routes = [{
         path: '/djshow/:id',
         props: true,
         component: djShow,
+    },
+    {
+        path: '/songasg/:id',
+        props: true,
+        component: songAsg,
     }
 
 ]

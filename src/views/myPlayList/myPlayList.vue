@@ -1,5 +1,5 @@
 <template>
-  <main class="rank">
+  <main class="rank" v-if="myCreadPlayList">
     <div class="r-wrap">
       <div class="m-rank">
         <div class="l-r-wrap">
@@ -295,7 +295,7 @@ export default {
       //获取评论
       this.commentInfo.id = this.myCreadPlayList[0].id;
       this.$store.dispatch("getComments", this.commentInfo);
-    }, 400);
+    }, 600);
   },
   methods: {
     //点击切换歌单

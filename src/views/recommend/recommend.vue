@@ -157,14 +157,22 @@
                     <li
                       v-for="(item, index) in billboardList.bsb"
                       :key="item.id"
-                      @click.stop="playMusic(item.id)"
                     >
                       <span :class="index < 3 ? 'numb' : null" class="num">{{
                         index + 1
                       }}</span>
-                      <a href="javascript:;" class="song">{{ item.name }}</a>
+                      <a
+                        href="javascript:;"
+                        @click="goSongAsg(item.id)"
+                        class="song"
+                        >{{ item.name }}</a
+                      >
                       <nav class="p-list">
-                        <a href="javascript:;" class="p-play"></a>
+                        <a
+                          href="javascript:; "
+                          class="p-play"
+                          @click.stop="playMusic(item.id)"
+                        ></a>
                         <a href="javascript:;" class="P-add"></a>
                         <a href="javascript:;" class="p-collection"></a>
                       </nav>
@@ -196,14 +204,22 @@
                     <li
                       v-for="(item2, index) in billboardList.xgb"
                       :key="item2.id"
-                      @click.stop="playMusic(item2.id)"
                     >
                       <span :class="index < 3 ? 'numb' : null" class="num">{{
                         index + 1
                       }}</span>
-                      <a href="javascript:;" class="song">{{ item2.name }}</a>
+                      <a
+                        href="javascript:;"
+                        class="song"
+                        @click="goSongAsg(item2.id)"
+                        >{{ item2.name }}</a
+                      >
                       <nav class="p-list">
-                        <a href="javascript:;" class="p-play"></a>
+                        <a
+                          href="javascript:;"
+                          class="p-play"
+                          @click.stop="playMusic(item2.id)"
+                        ></a>
                         <a href="javascript:;" class="P-add"></a>
                         <a href="javascript:;" class="p-collection"></a>
                       </nav>
@@ -235,14 +251,22 @@
                     <li
                       v-for="(item3, index) in billboardList.ycb"
                       :key="item3.id"
-                      @click.stop="playMusic(item3.id)"
                     >
                       <span :class="index < 3 ? 'numb' : null" class="num">{{
                         index + 1
                       }}</span>
-                      <a href="javascript:;" class="song">{{ item3.name }}</a>
+                      <a
+                        href="javascript:;"
+                        class="song"
+                        @click="goSongAsg(item3.id)"
+                        >{{ item3.name }}</a
+                      >
                       <nav class="p-list">
-                        <a href="javascript:;" class="p-play"></a>
+                        <a
+                          href="javascript:;"
+                          class="p-play"
+                          @click.stop="playMusic(item3.id)"
+                        ></a>
                         <a href="javascript:;" class="P-add"></a>
                         <a href="javascript:;" class="p-collection"></a>
                       </nav>
@@ -444,6 +468,28 @@ export default {
       this.billboardList.bsb = this.billboardList.bsb.splice(0, 10);
       this.billboardList.xgb = this.billboardList.xgb.splice(0, 10);
       this.billboardList.ycb = this.billboardList.ycb.splice(0, 10);
+
+      let arr1 = this.billboardList.bsb.map((item, index) => {
+        return {
+          name: item.name,
+          id: item.id,
+        };
+      });
+      let arr2 = this.billboardList.xgb.map((item, index) => {
+        return {
+          name: item.name,
+          id: item.id,
+        };
+      });
+      let arr3 = this.billboardList.ycb.map((item, index) => {
+        return {
+          name: item.name,
+          id: item.id,
+        };
+      });
+      this.billboardList.bsb = arr1;
+      this.billboardList.xgb = arr2;
+      this.billboardList.ycb = arr3;
     },
 
     //获取精品歌单列表
@@ -465,6 +511,10 @@ export default {
     //点击去歌单
     goPlayList(id) {
       this.$router.push({ path: `/playlist/${id}` });
+    },
+    //跳转歌曲详情页面
+    goSongAsg(id) {
+      this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
   },
   watch: {},

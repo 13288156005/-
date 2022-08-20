@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main class="main">
+    <main class="main" v-if="songDetail">
       <div class="m-wrap">
         <div class="m-left">
           <div class="playDetail">
@@ -76,6 +76,11 @@
                 </template>
               </el-table-column>
               <el-table-column prop="name" label="歌曲标题" width="236">
+                <template slot-scope="scope">
+                  <span @click="goSongAsg(scope.row.id)">{{
+                    scope.row.name
+                  }}</span>
+                </template>
               </el-table-column>
               <el-table-column prop="dt" label="时长" width="width">
                 <template slot-scope="scope">
@@ -88,75 +93,8 @@
               </el-table-column>
             </el-table>
           </div>
-          <section class="comment">
-            <header class="com-title clearFix">
-              <h3>评论</h3>
-              <p>共{{ totalCount }}条评论</p>
-            </header>
-            <div class="comarea clearFix">
-              <div class="com-img">
-                <img
-                  :src="
-                    Object.keys(user).length != 0
-                      ? user.imgUrl
-                      : require('./img/comimg.jpg')
-                  "
-                />
-              </div>
-              <div class="commentarea">
-                <div class="area">
-                  <textarea v-model="sendCommentInfo.content"></textarea>
-                </div>
-                <div class="comicon">
-                  <i class="smile"></i>
-                  <i class="art"></i>
-                  <a @click="sendCommentByid" class="comtxt">评论</a>
-                  <span>140</span>
-                </div>
-              </div>
-            </div>
-            <div class="comment-info">
-              <h3>精彩评论</h3>
-              <ul>
-                <li
-                  class="com-info clearFix"
-                  v-for="(item5, index) in commentArr"
-                  :key="index"
-                >
-                  <div class="head">
-                    <a href="javascript:;">
-                      <img :src="item5.avatarUrl" />
-                    </a>
-                  </div>
-                  <div class="com-content">
-                    <p class="com-top">
-                      <a href="javascript:;">{{ item5.name }}</a
-                      >:{{ item5.content }}
-                    </p>
-                    <p class="com-bottom">
-                      <time>{{ item5.timeStr }}</time>
-                      <a href="javascript:;" class="finger"
-                        ><i></i>({{ item5.likedCount }})</a
-                      >
-                      <span>|</span>
-                      <a href="javascript:;">回复</a>
-                    </p>
-                  </div>
-                </li>
-              </ul>
-              <nav class="page">
-                <el-pagination
-                  background
-                  layout="prev, pager, next"
-                  :total="this.totalCount"
-                  @prev-click="lastPage"
-                  @next-click="nextPage"
-                  @current-change="clickPage"
-                >
-                </el-pagination>
-              </nav>
-            </div>
-          </section>
+
+          <Comment :send="type"></Comment>
         </div>
         <div class="m-right">
           <div class="right_background"></div>
@@ -168,9 +106,11 @@
 
 <script>
 import { mapState } from "vuex";
+import Comment from "../comment/comment.vue";
 export default {
   data() {
     return {
+      type: "playList",
       text: "———·The Victoria's Secret Fashion Show·———\n\n维多利亚的秘密时尚内衣秀 首次举办是1995年情人节前夕 01年开始每年11月举行 并慢慢与电视台、网络等媒体合作推出电视时尚盛宴 维秘表演嘉宾由此产生\n\n每年最受瞩目的Fantasy Bra最早出现在1996年维密秀场上 另一标志性“天使“面孔——翅膀 则始于1998年\n\n歌单为2001—2018受邀表演嘉宾秀单曲 可云音乐搜索现场Live show\n封面选取\n首次选用06年贾婷婷开场《Sexy Back》\n\n二次选用13年FOB联手old霉现场\n《My Songs Know What You Did In The Dark》\n\n最终选用12年超模日现场《Diamonds》\n\n心中最佳｜12年《Phresh Out The Runaway》现场 \n\n歌单按表演嘉宾出场排序原曲\n18年纽约站：Kelsea Ballerini、The Chainsmokers\nHalsey、Bebe Rexha、Shawn Mendes、Rita Ora、The Struts\n\n17年上海站：Harry Styles、Miguel (李云迪助阵) Leslie Odom Jr、张靓颖\n\n16年巴黎站：Lady Gaga、Bruno Mars、The Weeknd\n\n15年纽约站：The Weeknd、Ellie Goulding、Selena Gomez\n\n14年伦敦站：Taylor Swift、Ed Sheeran、Ariana Grande、Hozier\n\n以下年份均在美国本土举办\n13年：Fall Out Boy、Taylor Swift、A Great Big World、Neon Jungle\n\n12年：Rihanna、Bruno Mars、Justin Bieber\n\n11年：Kanye West、Maroon 5、Jay-Z、Nicki Minaj\n\n10年：Akon、Katy Perry\n\n09年：Black Eyed Peas\n\n08年：Usher、Jorge Moreno\n\n07年：Will.I.Am、Seal、Spice Girls\n\n06年：Justin Timberlake\n\n05年：Chris Botti、Seal、Ricky Martin\n\n03/02/01..",
       flag: true,
       more: "详情",
@@ -239,6 +179,9 @@ export default {
     this.commentInfo.id = this.$route.params.id;
     this.$store.dispatch("getComments", this.commentInfo);
   },
+  components: {
+    Comment,
+  },
   methods: {
     //获取歌单详情
     getPlayList() {
@@ -264,48 +207,10 @@ export default {
     PlaySongList() {
       this.$store.dispatch("getPlayListSong", this.$route.params.id);
     },
-    //点击分页器上一页
-    lastPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击分页器下一页
-    nextPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击分页器页码
-    clickPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击发表评论
-    sendCommentByid() {
-      if (localStorage.getItem("userName")) {
-        this.sendCommentInfo.id = this.songDetail.id;
-        this.sendCommentInfo.cookie = this.user.cookie;
-        this.$store.dispatch("sendComment", this.sendCommentInfo);
-        this.sendCommentInfo.content = "";
 
-        setTimeout(() => {
-          if (this.$store.state.sendCommentAsg.code != 200) {
-            return this.$message.error("发表评论失败");
-          } else {
-            this.$message.success("发表评论成功");
-          }
-        }, 500);
-      } else {
-        return this.$message.error("请先登录");
-      }
+    //跳转歌曲详情页面
+    goSongAsg(id) {
+      this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
   },
   computed: {
@@ -348,24 +253,6 @@ export default {
         );
       });
       this.songTable = res;
-    },
-    //评论整理数据
-    comments(newVal, oldVal) {
-      this.totalCount = newVal.totalCount;
-      let res = newVal.comments.map((item, index) => {
-        return Object.assign(
-          {},
-          {
-            name: item.user.nickname,
-            content: item.content,
-            avatarUrl: item.user.avatarUrl,
-            timeStr: item.timeStr,
-            likedCount: item.likedCount,
-            time: item.time,
-          }
-        );
-      });
-      this.commentArr = res;
     },
   },
   //过滤器

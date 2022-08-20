@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="audioSubmit">
     <div class="m-wrap">
       <div class="m-left">
         <div class="playDetail">
@@ -79,7 +79,9 @@
               <li v-for="(item, index) in aduioSongList" :key="item.id">
                 <span>{{ index + 1 }}</span>
                 <i @click="playSong(item.id)"></i>
-                <div class="songName">{{ item.name }}</div>
+                <div class="songName" @click="goSongAsg(item.id)">
+                  {{ item.name }}
+                </div>
                 <p>{{ $moment(item.duration).format("MM:SS") }}</p>
                 <div class="songActive">{{ item.nickName }}</div>
                 <div class="zhuanji">{{ item.albumName }}</div>
@@ -87,75 +89,7 @@
             </ul>
           </div>
         </div>
-        <section class="comment">
-          <header class="com-title clearFix">
-            <h3>评论</h3>
-            <p>共{{ totalCount }}条评论</p>
-          </header>
-          <div class="comarea clearFix">
-            <div class="com-img">
-              <img
-                :src="
-                  Object.keys(user).length != 0
-                    ? user.imgUrl
-                    : require('./img/comimg.jpg')
-                "
-              />
-            </div>
-            <div class="commentarea">
-              <div class="area">
-                <textarea v-model="sendCommentInfo.content"></textarea>
-              </div>
-              <div class="comicon">
-                <i class="smile"></i>
-                <i class="art"></i>
-                <a @click="sendCommentByid" class="comtxt">评论</a>
-                <span>140</span>
-              </div>
-            </div>
-          </div>
-          <div class="comment-info">
-            <h3>精彩评论</h3>
-            <ul>
-              <li
-                class="com-info clearFix"
-                v-for="(item5, index) in commentArr"
-                :key="index"
-              >
-                <div class="head">
-                  <a href="javascript:;">
-                    <img :src="item5.avatarUrl" />
-                  </a>
-                </div>
-                <div class="com-content">
-                  <p class="com-top">
-                    <a href="javascript:;">{{ item5.name }}</a
-                    >:{{ item5.content }}
-                  </p>
-                  <p class="com-bottom">
-                    <time>{{ item5.timeStr }}</time>
-                    <a href="javascript:;" class="finger"
-                      ><i></i>({{ item5.likedCount }})</a
-                    >
-                    <span>|</span>
-                    <a href="javascript:;">回复</a>
-                  </p>
-                </div>
-              </li>
-            </ul>
-            <nav class="page">
-              <el-pagination
-                background
-                layout="prev, pager, next"
-                :total="this.totalCount"
-                @prev-click="lastPage"
-                @next-click="nextPage"
-                @current-change="clickPage"
-              >
-              </el-pagination>
-            </nav>
-          </div>
-        </section>
+        <Comment :send="type"></Comment>
       </div>
       <div class="m-right">
         <div class="right_background"></div>
@@ -166,6 +100,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Comment from "../comment/comment.vue";
 export default {
   data() {
     return {
@@ -194,7 +129,11 @@ export default {
         cookie: "",
       },
       user: {},
+      type: "djShow",
     };
+  },
+  components: {
+    Comment,
   },
   mounted() {
     //判断locatio是否存在
@@ -224,48 +163,10 @@ export default {
       console.log(id);
       this.$store.dispatch("getSongAsg", id);
     },
-    //点击分页器上一页
-    lastPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击分页器下一页
-    nextPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击分页器页码
-    clickPage(val) {
-      let lastElement = this.commentArr.slice(-1);
-      this.commentInfo.pageNo = val;
-      this.commentInfo.sortType = 3;
-      this.commentInfo.cursor = lastElement[0].time;
-      this.$store.dispatch("getComments", this.commentInfo);
-    },
-    //点击发表评论
-    sendCommentByid() {
-      if (localStorage.getItem("userName")) {
-        this.sendCommentInfo.id = this.$route.params.id;
-        this.sendCommentInfo.cookie = this.user.cookie;
-        this.$store.dispatch("sendComment", this.sendCommentInfo);
-        this.sendCommentInfo.content = "";
 
-        setTimeout(() => {
-          if (this.$store.state.sendCommentAsg.code != 200) {
-            return this.$message.error("发表评论失败");
-          } else {
-            this.$message.success("发表评论成功");
-          }
-        }, 500);
-      } else {
-        return this.$message.error("请先登录");
-      }
+    //跳转歌曲详情页面
+    goSongAsg(id) {
+      this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
   },
   computed: {
@@ -331,26 +232,7 @@ export default {
       return arr;
     },
   },
-  watch: {
-    //评论整理数据
-    comments(newVal, oldVal) {
-      this.totalCount = newVal.totalCount;
-      let res = newVal.comments.map((item, index) => {
-        return Object.assign(
-          {},
-          {
-            name: item.user.nickname,
-            content: item.content,
-            avatarUrl: item.user.avatarUrl,
-            timeStr: item.timeStr,
-            likedCount: item.likedCount,
-            time: item.time,
-          }
-        );
-      });
-      this.commentArr = res;
-    },
-  },
+  watch: {},
 };
 </script>
 
@@ -575,197 +457,6 @@ export default {
   }
 }
 
-.comment {
-  width: 100%;
-  margin-left: -40px;
-  padding: 0 30px 40px 40px;
-}
-.com-title {
-  margin-top: 40px;
-  height: 33px;
-  border-bottom: 2px solid #c20c0c;
-}
-.com-title h3 {
-  float: left;
-  font-size: 20px;
-  line-height: 28px;
-}
-.com-title p {
-  float: left;
-  margin: 9px 0 0 20px;
-  color: #666;
-}
-.comarea {
-  margin-top: 20px;
-}
-.com-img {
-  float: left;
-  width: 50px;
-}
-.com-img img {
-  width: 50px;
-  height: 50px;
-}
-.commentarea {
-  float: right;
-  width: 608px;
-}
-.area {
-  float: left;
-}
-.area textarea {
-  width: 592px;
-  height: 50px;
-  padding: 5px 6px 6px;
-  border: 1px solid #cdcdcd;
-  border-radius: 2px;
-  line-height: 19px;
-}
-.comicon {
-  float: left;
-  width: 608px;
-  padding-top: 10px;
-}
-.smile {
-  float: left;
-  margin: 0px 10px 0 0;
-  width: 18px;
-  height: 18px;
-  background: url(./img/icon.png) no-repeat -40px -490px;
-}
-.art {
-  float: left;
-  margin: 0px 10px 0 0;
-  width: 18px;
-  height: 18px;
-  background: url(./img/icon.png) no-repeat -60px -490px;
-}
-.comtxt {
-  float: right;
-  width: 46px;
-  height: 25px;
-  background: url(./img/button.png) no-repeat -84px -64px;
-  color: #fff;
-  text-align: center;
-  line-height: 25px;
-}
-.comicon span {
-  float: right;
-  margin-right: 10px;
-  line-height: 25px;
-  color: #999;
-}
-.comment-info ul {
-  padding-bottom: 40px;
-}
-.comment-info h3 {
-  height: 20px;
-  border-bottom: 1px solid #cfcfcf;
-}
-.com-info {
-  padding: 15px 0;
-  border-top: 1px dotted #ccc;
-}
-.head {
-  float: left;
-  width: 50px;
-  height: 50px;
-}
-.head img {
-  width: 50px;
-  height: 50px;
-}
-.com-content {
-  float: right;
-  width: 610px;
-}
-.com-top {
-  overflow: hidden;
-  line-height: 20px;
-}
-.com-top a {
-  color: #0c73c2;
-}
-.com-bottom {
-  margin-top: 15px;
-  text-align: right;
-}
-.com-bottom time {
-  float: left;
-  color: #999;
-}
-.finger {
-  color: #333;
-}
-.finger i {
-  display: inline-block;
-  vertical-align: top;
-  width: 15px;
-  height: 14px;
-  background: url(./img/icon2.png) no-repeat -150px 0;
-}
-.com-bottom a {
-  color: #666;
-}
-.com-bottom span {
-  margin: 0 2px;
-  color: #999;
-}
-.page {
-  margin: 20px 0;
-  text-align: center;
-  font-size: 0;
-}
-.page-change {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 0 1px 0 2px;
-  padding: 0 8px;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-  height: 22px;
-  font-size: 12px;
-  line-height: 22px;
-  color: #333;
-}
-.font {
-  border: none;
-  font-size: 12px;
-}
-.page-active {
-  color: #fff;
-  border-color: #a2161b;
-  background: url(./img/button.png) no-repeat 0 -650px;
-}
-.pro-page {
-  width: 47px;
-  height: 24px;
-  line-height: 24px;
-  padding: 0 0 0 22px;
-  text-align: left;
-  background: url(./img/button.png) no-repeat 0 -620px;
-}
-.next-page {
-  width: 57px;
-  height: 24px;
-  line-height: 24px;
-  padding: 0 0 0 12px;
-  text-align: left;
-  background: url(./img/button.png) no-repeat -75px -560px;
-}
-.page-change:hover {
-  text-decoration: none;
-  border-color: #666;
-}
-.pro-page:hover,
-.next-page:hover {
-  text-decoration: none;
-  border-color: #ccc;
-}
-.next-page:hover {
-  background-position-y: -590px;
-}
 .m-right {
   float: right;
   .right_background {

@@ -1,5 +1,5 @@
 <template>
-  <div class="main">
+  <div class="main" v-if="djDetailTop">
     <div class="m-wrap">
       <div class="m-left">
         <div class="playDetail">
@@ -86,6 +86,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Comment from "../comment/comment.vue";
 export default {
   data() {
     return {
@@ -106,6 +107,9 @@ export default {
     //获取电台节目列表
     this.djDetInfo.rid = this.$route.params.id;
     this.$store.dispatch("getDjDet", this.djDetInfo);
+  },
+  components: {
+    Comment,
   },
   methods: {
     //点击详情

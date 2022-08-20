@@ -17,12 +17,12 @@
                 @click="changePlayList(item.id)"
               >
                 <div class="l-r-spelist">
-                  <a href="#" class="l-r-left"
+                  <a href="javascript:;" class="l-r-left"
                     ><img :src="item.coverImgUrl + '?param=40y40'"
                   /></a>
                   <div class="l-r-right">
                     <p>
-                      <a href="#">{{ item.name }}</a>
+                      <a href="javascript:;">{{ item.name }}</a>
                     </p>
                     <span>{{ item.updateFrequency }}</span>
                   </div>
@@ -41,12 +41,12 @@
                 @click="changePlayList(item1.id)"
               >
                 <div class="l-r-spelist">
-                  <a href="#" class="l-r-left"
+                  <a href="javascript:;" class="l-r-left"
                     ><img :src="item1.coverImgUrl + '?param=40y40'"
                   /></a>
                   <div class="l-r-right">
                     <p>
-                      <a href="#">{{ item1.name }}</a>
+                      <a href="javascript:;">{{ item1.name }}</a>
                     </p>
                     <span>{{ item1.updateFrequency }}</span>
                   </div>
@@ -75,17 +75,17 @@
               <a href="javascript:;" @click="playSongList()" class="i-play">
                 <span><i></i>播放</span>
               </a>
-              <a href="#" class="i-add"></a>
-              <a href="#" class="i-add2">
+              <a href="javascript:;" class="i-add"></a>
+              <a href="javascript:;" class="i-add2">
                 <span>({{ songDetail.subscribedCount }})</span>
               </a>
-              <a href="#" class="i-share">
+              <a href="javascript:;" class="i-share">
                 <span>({{ songDetail.shareCount }})</span>
               </a>
-              <a href="#" class="i-download">
+              <a href="javascript:;" class="i-download">
                 <span>下载</span>
               </a>
-              <a href="#" class="i-mess">
+              <a href="javascript:;" class="i-mess">
                 <span>({{ songDetail.commentCount }})</span>
               </a>
             </div>
@@ -113,7 +113,12 @@
                   <div class="music">
                     <div class="musicWrap">
                       <a class="playicon" @click="playMusic(item3.id)"></a>
-                      <a href="#" class="m-song">{{ item3.name }}</a>
+                      <a
+                        href="javascript:;"
+                        @click="goSongAsg(item3.id)"
+                        class="m-song"
+                        >{{ item3.name }}</a
+                      >
                     </div>
                   </div>
                 </td>
@@ -127,7 +132,7 @@
                   </nav>
                 </td>
                 <td>
-                  <a href="#" class="music-singer">{{ item3.al }}</a>
+                  <a href="javascript:;" class="music-singer">{{ item3.al }}</a>
                 </td>
               </tr>
             </table>
@@ -170,22 +175,22 @@
                   :key="index"
                 >
                   <div class="head">
-                    <a href="#">
+                    <a href="javascript:;">
                       <img :src="item5.avatarUrl" />
                     </a>
                   </div>
                   <div class="com-content">
                     <p class="com-top">
-                      <a href="#">{{ item5.name }}</a
+                      <a href="javascript:;">{{ item5.name }}</a
                       >:{{ item5.content }}
                     </p>
                     <p class="com-bottom">
                       <time>{{ item5.timeStr }}</time>
-                      <a href="#" class="finger"
+                      <a href="javascript:;" class="finger"
                         ><i></i>({{ item5.likedCount }})</a
                       >
                       <span>|</span>
-                      <a href="#">回复</a>
+                      <a href="javascript:;">回复</a>
                     </p>
                   </div>
                 </li>
@@ -331,6 +336,10 @@ export default {
       } else {
         return this.$message.error("请先登录");
       }
+    },
+    //点击跳转歌曲详情
+    goSongAsg(id) {
+      this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
   },
   computed: {

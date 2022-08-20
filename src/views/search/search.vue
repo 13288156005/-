@@ -61,7 +61,7 @@
             <ul>
               <li v-for="(item, index) in songSearchMsg" :key="item.id">
                 <a href="javascript:;" @click="playSong(item.id)"></a>
-                <p>
+                <p @click="goSongAsg(item.id)">
                   {{ item.name }}<span>- {{ item.alia }}</span>
                 </p>
                 <div class="table_icon">
@@ -234,6 +234,10 @@ export default {
       this.playDetailInfo.id = id;
       this.playDetailInfo.cookie = user.cookie;
       this.$store.dispatch("GetPlayListSongAll", this.playDetailInfo);
+    },
+    //跳转歌曲详情页面
+    goSongAsg(id) {
+      this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
   },
   computed: {

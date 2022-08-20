@@ -320,7 +320,8 @@ export default new Vuex.Store({
                 return this._vm.$message.error(result.data.message)
             }
             commit('GETDJSUBMIT', result.data)
-        }
+        },
+        
 
 
     },
