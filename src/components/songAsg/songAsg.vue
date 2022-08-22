@@ -57,7 +57,9 @@
         <!-- 品论 -->
         <Comment @commentCount="getCommentCount" :send="type"></Comment>
       </div>
-      <div class="m-right">456</div>
+      <div class="m-right">
+        <div class="right_background"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -331,6 +333,14 @@ export default {
       color: #0c73c2;
       cursor: pointer;
     }
+  }
+}
+.m-right {
+  float: right;
+  .right_background {
+    width: 250px;
+    height: 780px;
+    background: url("./img/background.png") no-repeat;
   }
 }
 </style>

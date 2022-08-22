@@ -11,6 +11,7 @@ import discover from "@/views/discover/discover.vue"
 import djList from '@/components/djList/djList.vue'
 import djShow from '@/components/djShow/djShow.vue'
 import songAsg from '@/components/songAsg/songAsg'
+import singerAsg from '@/components/singerAsg/singerAsg.vue'
 
 Vue.use(VueRouter)
 
@@ -58,6 +59,11 @@ const routes = [{
         path: '/songasg/:id',
         props: true,
         component: songAsg,
+    },
+    {
+        path: '/singerasg/:id',
+        props: true,
+        component: singerAsg,
     }
 
 ]

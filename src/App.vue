@@ -23,6 +23,14 @@ export default {
   data() {
     return {};
   },
+  mounted() {
+    var deviceWidth = document.documentElement.clientWidth;
+
+    if (deviceWidth > 1080) {
+      deviceWidth = 1080;
+    }
+    document.documentElement.style.fontSize = deviceWidth / 25 + "px";
+  },
   components: {
     Header: Header,
     Footer: Footer,
