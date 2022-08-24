@@ -75,7 +75,11 @@
               ><span>主播电台</span></router-link
             >
             <a><span>歌手</span></a>
-            <a><span>新碟上架</span></a>
+            <router-link
+              :to="{ path: '/album' }"
+              :class="$route.path == '/album' ? 'n-active' : ''"
+              ><span>新碟上架</span></router-link
+            >
           </nav>
         </div>
       </div>

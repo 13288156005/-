@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { reqGetDjProgram, reqPlaySong, reqSongAsg, reqBanner, reqLogin, reqArtists, reqPlayList, reqGetPlayListSong, reqGetPlayList, reqGetPlayListCatList, reqGetTopList, reqGetComment, reqSendComment, reqGetLyric, reqGetUserPlayList, reqPlayUserList, reqGetPlayListSongAll, reqSearch, reqGetDjCatList, reqGetDjProgramToplist, reqGetDjRadioById, reqGetDjDetail, reqgetDjDet, reqGetDjSubmit } from '@/api/index.js'
-import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail } from '@/api/index.js'
+import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail, reqGetNewAlbum, reqGetAllAlbum } from '@/api/index.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -64,6 +64,10 @@ export default new Vuex.Store({
         singerDesc: {},
         //专辑详情
         albumDetail: {},
+        //最新专辑
+        newAlbum: {},
+        //全部新碟
+        albumAll: {}
 
     },
     getters: {},
@@ -152,6 +156,12 @@ export default new Vuex.Store({
         },
         GETALBUMDETAIL(state, albumDetail) {
             state.albumDetail = albumDetail
+        },
+        GETALBUMNEW(state, newAlbum) {
+            state.newAlbum = newAlbum
+        },
+        GETALBUMALL(state, albumAll) {
+            state.albumAll = albumAll
         }
     },
     actions: {
@@ -400,6 +410,22 @@ export default new Vuex.Store({
                 return this._vm.$message.error(result.data.message)
             }
             commit('GETALBUMDETAIL', result.data)
+        },
+        //获取最新专辑
+        async getAlbumNew({ commit }) {
+            const result = await reqGetNewAlbum()
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETALBUMNEW', result.data)
+        },
+        //获取全部新碟
+        async getAlbumAll({ commit }, data) {
+            const result = await reqGetAllAlbum(data)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETALBUMALL', result.data)
         }
 
 

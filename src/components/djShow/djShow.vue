@@ -86,7 +86,9 @@
                 <div class="songActive" @click="goSingerAsg(item.artistId)">
                   {{ item.nickName }}
                 </div>
-                <div class="zhuanji">{{ item.albumName }}</div>
+                <div class="zhuanji" @click="goAlbumAsg(item.albumId)">
+                  {{ item.albumName }}
+                </div>
               </li>
             </ul>
           </div>
@@ -173,6 +175,10 @@ export default {
     //点击跳转歌星详情
     goSingerAsg(id) {
       this.$router.push({ path: `/singerasg/${id}` });
+    },
+    //点击跳转专辑详情
+    goAlbumAsg(id) {
+      this.$router.push({ path: `/albumasg/${id}` });
     },
   },
   computed: {
@@ -457,6 +463,7 @@ export default {
           text-overflow: ellipsis;
           overflow: hidden;
           white-space: nowrap;
+          cursor: pointer;
         }
       }
     }

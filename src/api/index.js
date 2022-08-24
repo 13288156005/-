@@ -129,3 +129,7 @@ export const reqGetSingerDesc = (id) => request({ url: `/artist/desc?id=${id}`, 
 
 //获取专辑详情
 export const reqGetAlbumDetail = (id) => request({ url: `/album?id=${id}`, method: 'get' })
+    //获取最新专辑
+export const reqGetNewAlbum = () => request({ url: '/album/newest', method: 'get' })
+    //获取全部新碟
+export const reqGetAllAlbum = (data) => request({ url: '/album/new', method: 'get', params: data })

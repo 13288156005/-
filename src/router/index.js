@@ -13,6 +13,7 @@ import djShow from '@/components/djShow/djShow.vue'
 import songAsg from '@/components/songAsg/songAsg'
 import singerAsg from '@/components/singerAsg/singerAsg.vue'
 import albumAsg from '@/components/albumAsg/albumAsg.vue'
+import album from '@/views/album/album.vue'
 
 Vue.use(VueRouter)
 
@@ -70,6 +71,10 @@ const routes = [{
         path: '/albumasg/:id',
         props: true,
         component: albumAsg,
+    },
+    {
+        path: '/album',
+        component: album,
     }
 
 ]
