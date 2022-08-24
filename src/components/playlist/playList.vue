@@ -88,8 +88,18 @@
                 </template>
               </el-table-column>
               <el-table-column prop="ar" label="歌手" width="width">
+                <template slot-scope="scope">
+                  <span @click="goSingerAsg(scope.row.arId)">
+                    {{ scope.row.ar }}
+                  </span>
+                </template>
               </el-table-column>
               <el-table-column prop="al" label="专辑" width="width">
+                <template slot-scope="scope">
+                  <span @click="goAlbumAsg(scope.row.alId)">
+                    {{ scope.row.al }}
+                  </span>
+                </template>
               </el-table-column>
             </el-table>
           </div>
@@ -212,6 +222,14 @@ export default {
     goSongAsg(id) {
       this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
+    //点击跳转歌星详情
+    goSingerAsg(id) {
+      this.$router.push({ path: `/singerasg/${id}` });
+    },
+    //点击跳转专辑详情
+    goAlbumAsg(id) {
+      this.$router.push({ path: `/albumasg/${id}` });
+    },
   },
   computed: {
     ...mapState({
@@ -248,7 +266,9 @@ export default {
             dt: item.dt,
             id: item.id,
             ar: item.ar[0].name,
+            arId: item.ar[0].id,
             al: item.al.name,
+            alId: item.al.id,
           }
         );
       });

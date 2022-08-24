@@ -299,10 +299,11 @@
                       <img
                         :src="hotArt.picUrl + '?param=60y60'"
                         class="imgSize"
+                        @click="goSingerAsg(hotArt.id)"
                       />
                     </div>
                     <div class="s-info">
-                      <h4>{{ hotArt.name }}</h4>
+                      <h4 @click="goSingerAsg(hotArt.id)">{{ hotArt.name }}</h4>
                       <p>{{ hotArt.alias[0] }}</p>
                     </div>
                   </a>
@@ -515,6 +516,10 @@ export default {
     //跳转歌曲详情页面
     goSongAsg(id) {
       this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
+    },
+    //点击跳转歌星详情
+    goSingerAsg(id) {
+      this.$router.push({ path: `/singerasg/${id}` });
     },
   },
   watch: {},

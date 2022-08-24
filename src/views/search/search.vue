@@ -72,8 +72,10 @@
                     <a href="javascript:;" class="m-download"></a>
                   </nav>
                 </div>
-                <span>{{ item.ar }}</span>
-                <div class="ar">{{ item.al }}</div>
+                <span @click="goSingerAsg(item.arId)">{{ item.ar }}</span>
+                <div class="ar" @click="goAlbumAsg(item.alId)">
+                  {{ item.al }}
+                </div>
                 <div class="time">{{ item.dt | dataFormMatch }}</div>
               </li>
             </ul>
@@ -107,9 +109,9 @@
           <div v-if="searchInfo.type == 100" class="singerList">
             <ul>
               <li v-for="(item3, index) in singerList" :key="item3.id">
-                <a href="javascript">
-                  <img :src="item3.img1v1Url" />
-                  <p>{{ item3.name }}</p>
+                <a href="javascript:;">
+                  <img :src="item3.img1v1Url" @click="goSingerAsg(item3.id)" />
+                  <p @click="goSingerAsg(item3.id)">{{ item3.name }}</p>
                 </a>
               </li>
             </ul>
@@ -120,17 +122,15 @@
             <ul>
               <li v-for="(item4, index) in albumList" :key="item4.id">
                 <img :src="item4.picUrl" />
-                <span class="albumList_bg"></span>
-                <a
-                  href="javascript:;"
-                  class="playAlbumList"
-                  @click="playSongList(item4.id)"
-                ></a>
+                <span class="albumList_bg" @click="goAlbumAsg(item4.id)"></span>
+                <a href="javascript:;" class="playAlbumList"></a>
                 <p>
                   <a href="javascript:;">{{ item4.name }}</a>
                 </p>
                 <span>
-                  <a href="javascript:;">{{ item4.nickname }}</a>
+                  <a href="javascript:;" @click="goSingerAsg(item4.artistId)">{{
+                    item4.nickname
+                  }}</a>
                 </span>
               </li>
             </ul>
@@ -238,6 +238,15 @@ export default {
     //跳转歌曲详情页面
     goSongAsg(id) {
       this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
+    },
+    //点击跳转歌星详情
+    goSingerAsg(id) {
+      this.$router.push({ path: `/singerasg/${id}` });
+    },
+    //点击跳转专辑详情
+    goAlbumAsg(id) {
+      this.$router.push({ path: `/albumasg/${id}` });
+      console.log(id);
     },
   },
   computed: {

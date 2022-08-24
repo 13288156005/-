@@ -115,3 +115,17 @@ export const reqGetLoginCheck = (data) => request({ url: '/login/qr/check', para
 
 //获取账号信息
 export const reqGetUserInfo = (data) => request({ url: '/user/account', params: data })
+
+//获取歌手详情
+export const reqGetSingerDetail = (id) => request({ url: `/artist/detail?id=${id}`, method: 'get' })
+    //获取歌手单曲
+export const reqGetSingerSong = (id) => request({ url: `/artists?id=${id}`, method: 'get' })
+    //获取歌手MV
+export const reqGetSingerMV = (id) => request({ url: `/artist/mv?id=${id}`, method: 'get' })
+    //获取歌手专辑
+export const reqGetSingerAlbum = (data) => request({ url: '/artist/album', method: 'get', params: data })
+    //获取歌手描述
+export const reqGetSingerDesc = (id) => request({ url: `/artist/desc?id=${id}`, method: 'get' })
+
+//获取专辑详情
+export const reqGetAlbumDetail = (id) => request({ url: `/album?id=${id}`, method: 'get' })

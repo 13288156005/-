@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { reqGetDjProgram, reqPlaySong, reqSongAsg, reqBanner, reqLogin, reqArtists, reqPlayList, reqGetPlayListSong, reqGetPlayList, reqGetPlayListCatList, reqGetTopList, reqGetComment, reqSendComment, reqGetLyric, reqGetUserPlayList, reqPlayUserList, reqGetPlayListSongAll, reqSearch, reqGetDjCatList, reqGetDjProgramToplist, reqGetDjRadioById, reqGetDjDetail, reqgetDjDet, reqGetDjSubmit } from '@/api/index.js'
+import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail } from '@/api/index.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -51,6 +52,18 @@ export default new Vuex.Store({
         djDet: {},
         //电台节目详情
         djSubmit: {},
+        //歌手详情
+        singerDetail: {},
+        //歌手歌曲
+        singerSong: {},
+        //歌手MV
+        singerMV: {},
+        //歌手专辑
+        singerAlbum: {},
+        //歌手描述
+        singerDesc: {},
+        //专辑详情
+        albumDetail: {},
 
     },
     getters: {},
@@ -121,6 +134,24 @@ export default new Vuex.Store({
         },
         GETDJSUBMIT(state, djSubmit) {
             state.djSubmit = djSubmit
+        },
+        GETSINGERDETAIL(state, singerDetail) {
+            state.singerDetail = singerDetail
+        },
+        GETSINGERSONG(state, singerSong) {
+            state.singerSong = singerSong
+        },
+        GETSINGERMV(state, singerMV) {
+            state.singerMV = singerMV
+        },
+        GETSINGERALBUM(state, singerAlbum) {
+            state.singerAlbum = singerAlbum
+        },
+        GETSINGERDESC(state, singerDesc) {
+            state.singerDesc = singerDesc
+        },
+        GETALBUMDETAIL(state, albumDetail) {
+            state.albumDetail = albumDetail
         }
     },
     actions: {
@@ -321,7 +352,56 @@ export default new Vuex.Store({
             }
             commit('GETDJSUBMIT', result.data)
         },
-        
+        //获取歌手详情
+        async getSingerDetail({ commit }, id) {
+            const result = await reqGetSingerDetail(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERDETAIL', result.data)
+        },
+        //获取歌手单曲
+        async getSingerSong({ commit }, id) {
+            const result = await reqGetSingerSong(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERSONG', result.data)
+        },
+        //获取歌手mv
+        async getSingerMv({ commit }, id) {
+            const result = await reqGetSingerMV(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERMV', result.data)
+        },
+        //获取歌手专辑
+        async getSingerAlbum({ commit }, data) {
+            const result = await reqGetSingerAlbum(data)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERALBUM', result.data)
+        },
+        //获取歌手描述
+        async getSingerDesc({ commit }, id) {
+            const result = await reqGetSingerDesc(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERDESC', result.data)
+        },
+
+        //获取专辑详情
+        async getAlbumDetail({ commit }, id) {
+            const result = await reqGetAlbumDetail(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETALBUMDETAIL', result.data)
+        }
+
 
 
     },

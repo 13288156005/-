@@ -83,7 +83,9 @@
                   {{ item.name }}
                 </div>
                 <p>{{ $moment(item.duration).format("MM:SS") }}</p>
-                <div class="songActive">{{ item.nickName }}</div>
+                <div class="songActive" @click="goSingerAsg(item.artistId)">
+                  {{ item.nickName }}
+                </div>
                 <div class="zhuanji">{{ item.albumName }}</div>
               </li>
             </ul>
@@ -167,6 +169,10 @@ export default {
     //跳转歌曲详情页面
     goSongAsg(id) {
       this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
+    },
+    //点击跳转歌星详情
+    goSingerAsg(id) {
+      this.$router.push({ path: `/singerasg/${id}` });
     },
   },
   computed: {

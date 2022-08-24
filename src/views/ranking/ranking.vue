@@ -132,7 +132,12 @@
                   </nav>
                 </td>
                 <td>
-                  <a href="javascript:;" class="music-singer">{{ item3.al }}</a>
+                  <a
+                    href="javascript:;"
+                    @click="goSingerAsg(item3.arId)"
+                    class="music-singer"
+                    >{{ item3.ar }}</a
+                  >
                 </td>
               </tr>
             </table>
@@ -341,6 +346,10 @@ export default {
     goSongAsg(id) {
       this.$router.push({ path: `/songasg/${id}`, query: { type: "song" } });
     },
+    //点击跳转歌星详情
+    goSingerAsg(id) {
+      this.$router.push({ path: `/singerasg/${id}` });
+    },
   },
   computed: {
     ...mapState({
@@ -363,21 +372,6 @@ export default {
         });
         return res;
       }
-    },
-    //处理v-if和v-for一起使用的问题
-    activeSongTable1: function () {
-      return this.topListAll.filter((item, index) => {
-        if (index < 4) {
-          return item;
-        }
-      });
-    },
-    activeSongTable2: function () {
-      return this.topListAll.filter((item, index) => {
-        if (index > 4) {
-          return item;
-        }
-      });
     },
   },
   watch: {
@@ -402,6 +396,7 @@ export default {
             dt: item.dt,
             id: item.id,
             ar: item.ar[0].name,
+            arId: item.ar[0].id,
             al: item.al.name,
           }
         );

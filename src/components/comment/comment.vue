@@ -60,6 +60,7 @@
           background
           layout="prev, pager, next"
           :total="commentCount"
+          :page-size="20"
           @prev-click="lastPage"
           @next-click="nextPage"
           @current-change="clickPage"
@@ -186,6 +187,10 @@ export default {
       if (this.type == "djShow") {
         this.sendCommentInfo.type = 4;
         this.commentInfo.type = 4;
+      }
+      if (this.type == "album") {
+        this.sendCommentInfo.type = 3;
+        this.commentInfo.type = 3;
       }
     },
   },
