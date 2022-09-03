@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { reqGetDjProgram, reqPlaySong, reqSongAsg, reqBanner, reqLogin, reqArtists, reqPlayList, reqGetPlayListSong, reqGetPlayList, reqGetPlayListCatList, reqGetTopList, reqGetComment, reqSendComment, reqGetLyric, reqGetUserPlayList, reqPlayUserList, reqGetPlayListSongAll, reqSearch, reqGetDjCatList, reqGetDjProgramToplist, reqGetDjRadioById, reqGetDjDetail, reqgetDjDet, reqGetDjSubmit } from '@/api/index.js'
-import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail, reqGetNewAlbum, reqGetAllAlbum } from '@/api/index.js'
+import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail, reqGetNewAlbum, reqGetAllAlbum, reqGetHotSinger, reqGetSingerList } from '@/api/index.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -67,7 +67,11 @@ export default new Vuex.Store({
         //最新专辑
         newAlbum: {},
         //全部新碟
-        albumAll: {}
+        albumAll: {},
+        // 热门歌手
+        hotSinger: {},
+        //歌手列表
+        singerList: {},
 
     },
     getters: {},
@@ -162,6 +166,12 @@ export default new Vuex.Store({
         },
         GETALBUMALL(state, albumAll) {
             state.albumAll = albumAll
+        },
+        GETHOTSINGER(state, hotSinger) {
+            state.hotSinger = hotSinger
+        },
+        GETSINGERLIST(state, singerList) {
+            state.singerList = singerList
         }
     },
     actions: {
@@ -426,9 +436,23 @@ export default new Vuex.Store({
                 return this._vm.$message.error(result.data.message)
             }
             commit('GETALBUMALL', result.data)
+        },
+        //获取热门歌手
+        async getHotSinger({ commit }) {
+            const result = await reqGetHotSinger()
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETHOTSINGER', result.data)
+        },
+        //获取歌手分类列表
+        async getSingerList({ commit }, data) {
+            const result = await reqGetSingerList(data)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETSINGERLIST', result.data)
         }
-
-
 
     },
     modules: {}

@@ -74,7 +74,11 @@
               :class="$route.path == '/discover' ? 'n-active' : ''"
               ><span>主播电台</span></router-link
             >
-            <a><span>歌手</span></a>
+            <router-link
+              :to="{ path: '/singer' }"
+              :class="$route.path == '/singer' ? 'n-active' : ''"
+              ><span>歌手</span></router-link
+            >
             <router-link
               :to="{ path: '/album' }"
               :class="$route.path == '/album' ? 'n-active' : ''"

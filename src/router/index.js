@@ -14,6 +14,7 @@ import songAsg from '@/components/songAsg/songAsg'
 import singerAsg from '@/components/singerAsg/singerAsg.vue'
 import albumAsg from '@/components/albumAsg/albumAsg.vue'
 import album from '@/views/album/album.vue'
+import singer from '@/views/singer/singer.vue'
 
 Vue.use(VueRouter)
 
@@ -75,6 +76,10 @@ const routes = [{
     {
         path: '/album',
         component: album,
+    },
+    {
+        path: '/singer',
+        component: singer,
     }
 
 ]

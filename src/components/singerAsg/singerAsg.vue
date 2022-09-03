@@ -1,7 +1,7 @@
 <template>
   <div class="main">
     <div class="m-wrap">
-      <div class="m-left">
+      <div class="m-left" v-if="detail">
         <div class="singerAsg">
           <div class="singerAsg-title">
             <h2>{{ detail.name }}</h2>
@@ -145,7 +145,9 @@
           </div>
         </div>
       </div>
-      <div class="m-right">456</div>
+      <div class="m-right">
+        <div class="right_background"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -578,6 +580,15 @@ export default {
     .table-active {
       display: block;
     }
+  }
+}
+
+.m-right {
+  float: right;
+  .right_background {
+    width: 250px;
+    height: 900px;
+    background: url("./img/Snipaste_2022-09-03_11-47-14.png") no-repeat;
   }
 }
 </style>

@@ -9,7 +9,7 @@
       </div>
       <div class="center">
         <audio preload="auto" ref="audio"></audio>
-        <img :src="SongAsg.picUrl[num]" alt="" />
+        <img :src="SongAsg.picUrl[num] + '?param=34y35'" alt="" />
         <div class="play_progress">
           <div class="play_top">
             <h4>{{ SongAsg.name[num] }}</h4>

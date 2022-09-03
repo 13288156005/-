@@ -7,7 +7,8 @@ let requests = axios.create({
         // 本地地址
         // baseURL: "http://localhost:3000",
         // 线上地址
-        baseURL: "https://netease-cloud-music-api-git-master-13288156005.vercel.app",
+        // baseURL: "https://netease-cloud-music-api-git-master-13288156005.vercel.app",
+        baseURL: "http://43.143.26.252:3000",
         //请求不能超过20s
         timeout: 20000,
         headers: {

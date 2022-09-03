@@ -89,7 +89,9 @@
         </div>
         <Comment :send="type"></Comment>
       </div>
-      <div class="m-right">321</div>
+      <div class="m-right">
+        <div class="right_background"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -483,6 +485,14 @@ export default {
         }
       }
     }
+  }
+}
+.m-right {
+  float: right;
+  .right_background {
+    width: 230px;
+    height: 900px;
+    background: url("./img/Snipaste_2022-09-03_11-56-22.png") no-repeat -20px 0px;
   }
 }
 </style>
