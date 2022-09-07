@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { reqGetDjProgram, reqPlaySong, reqSongAsg, reqBanner, reqLogin, reqArtists, reqPlayList, reqGetPlayListSong, reqGetPlayList, reqGetPlayListCatList, reqGetTopList, reqGetComment, reqSendComment, reqGetLyric, reqGetUserPlayList, reqPlayUserList, reqGetPlayListSongAll, reqSearch, reqGetDjCatList, reqGetDjProgramToplist, reqGetDjRadioById, reqGetDjDetail, reqgetDjDet, reqGetDjSubmit } from '@/api/index.js'
-import { reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail, reqGetNewAlbum, reqGetAllAlbum, reqGetHotSinger, reqGetSingerList } from '@/api/index.js'
+import { reqGetMvDetail, reqGetMvUrl, reqGetSingerDetail, reqGetSingerSong, reqGetSingerMV, reqGetSingerAlbum, reqGetSingerDesc, reqGetAlbumDetail, reqGetNewAlbum, reqGetAllAlbum, reqGetHotSinger, reqGetSingerList } from '@/api/index.js'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -72,6 +72,10 @@ export default new Vuex.Store({
         hotSinger: {},
         //歌手列表
         singerList: {},
+        //mv详情
+        mvDetail: {},
+        //mv播放地址
+        mvUrl: {},
 
     },
     getters: {},
@@ -172,6 +176,12 @@ export default new Vuex.Store({
         },
         GETSINGERLIST(state, singerList) {
             state.singerList = singerList
+        },
+        GETMVDETAIL(state, mvDetail) {
+            state.mvDetail = mvDetail
+        },
+        GETMVURL(state, mvUrl) {
+            state.mvUrl = mvUrl
         }
     },
     actions: {
@@ -452,6 +462,22 @@ export default new Vuex.Store({
                 return this._vm.$message.error(result.data.message)
             }
             commit('GETSINGERLIST', result.data)
+        },
+        //获取mv详情
+        async getMvDetail({ commit }, id) {
+            const result = await reqGetMvDetail(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETMVDETAIL', result.data)
+        },
+        //获取mvurl
+        async getMvUrl({ commit }, id) {
+            const result = await reqGetMvUrl(id)
+            if (result.data.code !== 200) {
+                return this._vm.$message.error(result.data.message)
+            }
+            commit('GETMVURL', result.data)
         }
 
     },

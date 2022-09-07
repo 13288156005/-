@@ -122,7 +122,11 @@
                   <div class="musicWrap">
                     <a class="playicon" @click="playMusic(item3.id)"></a>
                     <a class="m-song music-singer">{{ item3.name }}</a>
-                    <span class="mv"></span>
+                    <span
+                      class="mv"
+                      v-if="item.mv"
+                      @click="goMv(item.mv)"
+                    ></span>
                   </div>
                 </div>
               </td>
@@ -357,6 +361,10 @@ export default {
       this.commentInfo.cursor = lastElement[0].time;
       this.$store.dispatch("getComments", this.commentInfo);
     },
+    //点击跳转MV
+    goMv(id) {
+      this.$router.push({ path: `/mvasg/${id}` });
+    },
   },
   computed: {
     ...mapState({
@@ -375,6 +383,7 @@ export default {
             let coverImgUrl = item.coverImgUrl;
             let trackCount = item.trackCount;
             let nickname = item.creator.nickname;
+
             return { id, name, coverImgUrl, trackCount, nickname };
           }
         });
@@ -427,6 +436,7 @@ export default {
             id: item.id,
             ar: item.ar[0].name,
             al: item.al.name,
+            mv: item.mv,
           }
         );
       });

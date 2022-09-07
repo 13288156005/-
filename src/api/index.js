@@ -138,3 +138,8 @@ export const reqGetAllAlbum = (data) => request({ url: '/album/new', method: 'ge
 export const reqGetHotSinger = () => request({ url: '/top/artists?limit=240', method: 'get' })
     //获取歌手分类列表
 export const reqGetSingerList = (data) => request({ url: '/artist/list', method: 'get', params: data })
+
+//获取mv详情
+export const reqGetMvDetail = (id) => request({ url: `/mv/detail?mvid=${id}`, method: 'get' })
+    //获取mv播放地址
+export const reqGetMvUrl = (id) => request({ url: `/mv/url?id=${id}`, method: 'get' })

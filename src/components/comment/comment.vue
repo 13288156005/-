@@ -192,6 +192,10 @@ export default {
         this.sendCommentInfo.type = 3;
         this.commentInfo.type = 3;
       }
+      if (this.type == "mv") {
+        this.sendCommentInfo.type = 1;
+        this.commentInfo.type = 1;
+      }
     },
   },
   computed: {

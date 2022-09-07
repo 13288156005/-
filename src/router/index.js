@@ -15,6 +15,7 @@ import singerAsg from '@/components/singerAsg/singerAsg.vue'
 import albumAsg from '@/components/albumAsg/albumAsg.vue'
 import album from '@/views/album/album.vue'
 import singer from '@/views/singer/singer.vue'
+import mvAsg from '@/components/mvAsg/mvAsg'
 
 Vue.use(VueRouter)
 
@@ -80,6 +81,11 @@ const routes = [{
     {
         path: '/singer',
         component: singer,
+    },
+    {
+        path: '/mvasg/:id',
+        props: true,
+        component: mvAsg,
     }
 
 ]

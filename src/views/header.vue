@@ -139,6 +139,8 @@ export default {
 
       //二维码图片地址
       qrCodeUrl: "",
+      //定时器
+      timer: null,
     };
   },
   mounted() {
@@ -151,7 +153,10 @@ export default {
   },
   methods: {
     //当关闭登录对话框的回调函数
-    closeLogDialog() {},
+    closeLogDialog() {
+      //清除定时器
+      clearInterval(this.timer);
+    },
     //重置手机号码和密码
     resetLog() {},
     //成功登录账号
@@ -205,7 +210,6 @@ export default {
         return this._vm.$message.error(result2.data.message);
       }
       this.qrCodeUrl = result2.data.data.qrimg;
-      console.log(result2.data);
       //显示登录对话框
       this.dialogVisible = true;
       let timer = setInterval(async () => {
@@ -251,6 +255,7 @@ export default {
           return;
         }
       }, 3000);
+      this.timer = timer;
     },
   },
   computed: {

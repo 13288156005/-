@@ -80,6 +80,11 @@
                   <span @click="goSongAsg(scope.row.id)">{{
                     scope.row.name
                   }}</span>
+                  <span
+                    class="mv"
+                    v-if="scope.row.mv"
+                    @click="goMv(scope.row.mv)"
+                  ></span>
                 </template>
               </el-table-column>
               <el-table-column prop="dt" label="时长" width="width">
@@ -230,6 +235,10 @@ export default {
     goAlbumAsg(id) {
       this.$router.push({ path: `/albumasg/${id}` });
     },
+    //点击跳转mv详情
+    goMv(id) {
+      this.$router.push({ path: `/mvasg/${id}` });
+    },
   },
   computed: {
     ...mapState({
@@ -269,6 +278,7 @@ export default {
             arId: item.ar[0].id,
             al: item.al.name,
             alId: item.al.id,
+            mv: item.mv,
           }
         );
       });
@@ -461,6 +471,14 @@ export default {
       }
     }
   }
+}
+.mv {
+  float: right;
+  width: 23px;
+  height: 17px;
+  margin: 0 0 0 3px;
+  background: url(./img/table.png) no-repeat 0 -151px;
+  cursor: pointer;
 }
 
 //table样式

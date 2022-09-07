@@ -72,6 +72,7 @@
               <p class="song-name" @click="goSongAsg(item.id)">
                 {{ item.name }}
               </p>
+              <span class="mv" v-if="item.mv" @click="goMv(item.mv)"></span>
               <span class="song-time">
                 <p>{{ $moment(item.dt).format("mm:ss") }}</p>
                 <nav class="play-nav">
@@ -129,6 +130,12 @@ export default {
     playSong(id) {
       this.$store.dispatch("getSongAsg", id);
     },
+    //点击跳转mv页面
+    goMv(id) {
+      this.$router.push({
+        path: `/mvAsg/${id}`,
+      });
+    },
   },
   computed: {
     ...mapState(["albumDetail"]),
@@ -157,7 +164,8 @@ export default {
           let dt = item.dt;
           let ar = item.ar[0].name;
           let arId = item.ar[0].id;
-          return { id, name, dt, ar, arId };
+          let mv = item.mv;
+          return { id, name, dt, ar, arId, mv };
         });
         return arr;
       }
@@ -427,6 +435,17 @@ export default {
           white-space: nowrap;
           overflow: hidden;
           cursor: pointer;
+        }
+        position: relative;
+        .mv {
+          // float: left;
+          position: absolute;
+          width: 24px;
+          height: 17px;
+          margin: 0 0 0 3px;
+          background: url(./img/table.png) no-repeat 0 -151px;
+          cursor: pointer;
+          left: 310px;
         }
         .song-time {
           width: 100px;

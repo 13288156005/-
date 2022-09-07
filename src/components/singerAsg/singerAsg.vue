@@ -61,6 +61,7 @@
                 <p class="song-name" @click="goSongAsg(item.id)">
                   {{ item.name }}
                 </p>
+                <span class="mv" v-if="item.mv" @click="goMv(item.mv)"></span>
                 <span class="song-time">
                   <p>{{ $moment(item.dt).format("mm:ss") }}</p>
                   <nav class="play-nav">
@@ -120,7 +121,114 @@
               class="table-mvList"
               :class="tableType == 'mvList' ? 'mvList table-active' : 'mvList'"
             >
-              <p>还没完善</p>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
+              <li>
+                <div class="img">
+                  <img
+                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
+                  />
+                  <i>1</i>
+                </div>
+                <p>孤勇者（影星联盟）</p>
+              </li>
             </ul>
             <!-- 歌星简介 -->
             <div
@@ -222,6 +330,12 @@ export default {
     playSong(id) {
       this.$store.dispatch("getSongAsg", id);
     },
+    //点击跳转mv页面
+    goMv(id) {
+      this.$router.push({
+        path: `/mvasg/${id}`,
+      });
+    },
   },
   computed: {
     ...mapState(["singerSong", "singerAlbum", "singerDesc"]),
@@ -243,7 +357,8 @@ export default {
           let alId = item.al.id;
           let alName = item.al.name;
           let dt = item.dt;
-          return { id, name, alId, alName, dt };
+          let mv = item.mv;
+          return { id, name, alId, alName, dt, mv };
         });
         return arr;
       }
@@ -442,6 +557,17 @@ export default {
           overflow: hidden;
           cursor: pointer;
         }
+        position: relative;
+        .mv {
+          // float: left;
+          position: absolute;
+          width: 24px;
+          height: 17px;
+          margin: 0 0 0 3px;
+          background: url(./img/table.png) no-repeat 0 -151px;
+          cursor: pointer;
+          left: 310px;
+        }
         .song-time {
           width: 100px;
 
@@ -544,6 +670,8 @@ export default {
     .table-mvList {
       display: none;
       min-height: 255px;
+      li {
+      }
     }
     .table-artAsg {
       display: none;

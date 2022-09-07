@@ -119,6 +119,11 @@
                         class="m-song"
                         >{{ item3.name }}</a
                       >
+                      <span
+                        class="mv"
+                        v-if="item3.mv"
+                        @click="goMv(item3.mv)"
+                      ></span>
                     </div>
                   </div>
                 </td>
@@ -350,6 +355,10 @@ export default {
     goSingerAsg(id) {
       this.$router.push({ path: `/singerasg/${id}` });
     },
+    //点击跳转mv页面
+    goMv(id) {
+      this.$router.push({ path: `/mvasg/${id}` });
+    },
   },
   computed: {
     ...mapState({
@@ -398,6 +407,7 @@ export default {
             ar: item.ar[0].name,
             arId: item.ar[0].id,
             al: item.al.name,
+            mv: item.mv,
           }
         );
       });
@@ -755,6 +765,7 @@ ul {
   height: 17px;
   margin: 0 0 0 3px;
   background: url(./img/table.png) no-repeat 0 -151px;
+  cursor: pointer;
 }
 .time {
   color: #666;
