@@ -25,7 +25,7 @@
               </li>
               <li
                 :class="tableType == 'mvList' ? 'table-header-active' : ''"
-                @click="changeTable('mvList')"
+                @click="changeTable('mvList'), changeMv()"
               >
                 相关MV
               </li>
@@ -118,117 +118,33 @@
             </ul>
             <!-- mv列表  -->
             <ul
-              class="table-mvList"
-              :class="tableType == 'mvList' ? 'mvList table-active' : 'mvList'"
+              :class="
+                tableType == 'mvList'
+                  ? 'table-mvList table-active'
+                  : 'table-mvList'
+              "
             >
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
-              <li>
-                <div class="img">
-                  <img
-                    src="http://p1.music.126.net/vkdxv9FemVhmmP1HMhN4uw==/109951166702989777.jpg?param=137y103"
-                  />
-                  <i>1</i>
-                </div>
-                <p>孤勇者（影星联盟）</p>
-              </li>
+              <div class="mvTable">
+                <li v-for="(item, index) in singerMvList" :key="item.id">
+                  <div class="img" @click="goMv(item.id)">
+                    <img :src="item.imgurl + '?param=137y103'" />
+                    <i></i>
+                  </div>
+                  <p @click="goMv(item.id)">{{ item.name }}</p>
+                </li>
+              </div>
+              <nav class="page">
+                <el-pagination
+                  background
+                  layout="prev, pager, next"
+                  :total="albumCount"
+                  :page-size="12"
+                  @prev-click="lastPage"
+                  @next-click="nextPage"
+                  @current-change="clickPage"
+                >
+                </el-pagination>
+              </nav>
             </ul>
             <!-- 歌星简介 -->
             <div
@@ -272,6 +188,12 @@ export default {
         limit: 12,
         offset: 0,
       },
+      //发送歌手mv参数
+      singerMvInfo: {
+        id: 0,
+        limit: 12,
+        offset: 0,
+      },
       //专辑数量
       albumCount: 0,
       //歌手详情介绍
@@ -295,20 +217,29 @@ export default {
       this.singerAlbumInfo.id = this.$route.params.id;
       this.$store.dispatch("getSingerAlbum", this.singerAlbumInfo);
     },
+    //切换到mv页面
+    changeMv() {
+      this.singerAlbumInfo.id = this.$route.params.id;
+      //获取歌手mv
+      this.$store.dispatch("getSingerMv", this.singerAlbumInfo);
+    },
     //点击上一页
     lastPage(val) {
       this.singerAlbumInfo.offset = (val - 1) * 12;
       this.$store.dispatch("getSingerAlbum", this.singerAlbumInfo);
+      this.$store.dispatch("getSingerMv", this.singerAlbumInfo);
     },
     //点击下一页
     nextPage(val) {
       this.singerAlbumInfo.offset = (val - 1) * 12;
       this.$store.dispatch("getSingerAlbum", this.singerAlbumInfo);
+      this.$store.dispatch("getSingerMv", this.singerAlbumInfo);
     },
     // 点击当前页
     clickPage(val) {
       this.singerAlbumInfo.offset = (val - 1) * 12;
       this.$store.dispatch("getSingerAlbum", this.singerAlbumInfo);
+      this.$store.dispatch("getSingerMv", this.singerAlbumInfo);
     },
     //点击切换歌手描述
     changeArtAsg() {
@@ -338,7 +269,7 @@ export default {
     },
   },
   computed: {
-    ...mapState(["singerSong", "singerAlbum", "singerDesc"]),
+    ...mapState(["singerSong", "singerAlbum", "singerDesc", "singerMV"]),
     detail: function () {
       if (Object.keys(this.singerSong).length > 0) {
         return {
@@ -389,6 +320,18 @@ export default {
           });
           return arr;
         }
+      }
+    },
+    singerMvList: function () {
+      if (Object.keys(this.singerMV).length > 0) {
+        let arr = [];
+        arr = this.singerMV.mvs.map((item, index) => {
+          let id = item.id;
+          let name = item.name;
+          let imgurl = item.imgurl;
+          return { id, name, imgurl };
+        });
+        return arr;
       }
     },
   },
@@ -657,20 +600,40 @@ export default {
           }
         }
       }
-
-      .page {
-        margin: 20px auto;
-        font-size: 0;
-        // margin-left: 400px;
-        display: flex;
-        justify-content: center;
-      }
     }
 
     .table-mvList {
       display: none;
       min-height: 255px;
-      li {
+      .mvTable {
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        li {
+          .img {
+            position: relative;
+            i {
+              position: absolute;
+              display: inline-block;
+              width: 39px;
+              height: 40px;
+              background: url("./img/index02.png") -32px -88px;
+              left: 50%;
+              bottom: 55%;
+              margin-left: -20px;
+              margin-bottom: -20px;
+              cursor: pointer;
+            }
+          }
+          p {
+            width: 137px;
+            padding: 8px 0;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+          }
+        }
       }
     }
     .table-artAsg {
@@ -718,5 +681,12 @@ export default {
     height: 900px;
     background: url("./img/Snipaste_2022-09-03_11-47-14.png") no-repeat;
   }
+}
+.page {
+  margin: 20px auto;
+  font-size: 0;
+  // margin-left: 400px;
+  display: flex;
+  justify-content: center;
 }
 </style>

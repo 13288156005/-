@@ -124,8 +124,8 @@
                     <a class="m-song music-singer">{{ item3.name }}</a>
                     <span
                       class="mv"
-                      v-if="item.mv"
-                      @click="goMv(item.mv)"
+                      v-if="item3.mv"
+                      @click="goMv(item3.mv)"
                     ></span>
                   </div>
                 </div>

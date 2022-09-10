@@ -399,8 +399,8 @@ export default new Vuex.Store({
             commit('GETSINGERSONG', result.data)
         },
         //获取歌手mv
-        async getSingerMv({ commit }, id) {
-            const result = await reqGetSingerMV(id)
+        async getSingerMv({ commit }, data) {
+            const result = await reqGetSingerMV(data)
             if (result.data.code !== 200) {
                 return this._vm.$message.error(result.data.message)
             }

@@ -121,7 +121,7 @@ export const reqGetSingerDetail = (id) => request({ url: `/artist/detail?id=${id
     //获取歌手单曲
 export const reqGetSingerSong = (id) => request({ url: `/artists?id=${id}`, method: 'get' })
     //获取歌手MV
-export const reqGetSingerMV = (id) => request({ url: `/artist/mv?id=${id}`, method: 'get' })
+export const reqGetSingerMV = (data) => request({ url: `/artist/mv`, method: 'get', params: data })
     //获取歌手专辑
 export const reqGetSingerAlbum = (data) => request({ url: '/artist/album', method: 'get', params: data })
     //获取歌手描述
