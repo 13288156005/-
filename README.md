@@ -1,19 +1,62 @@
-# emon_music
+# 主体结构：分为两部分
 
-## Project setup
-```
-yarn install
-```
+第一部分：主体页面（views文件夹）
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+第二部分：组件页面（components文件夹）
 
-### Compiles and minifies for production
-```
-yarn build
-```
+项目运用技能点：vue2 flex布局 element-ui axios Moment.js
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## 第一部分：主页面
+
+index页面：（recommend）轮播图功能，登录功能，数据展示等功能。
+
+排行篇页面：（ranking）播放功能，评论功能，处理数据是否含有mv等功能
+
+歌单页面：（sheet） 主要区别分类功能。例如欧美，日本等等
+
+主播电台页面（discover）区分电台节目还是电台列表。
+
+歌手页面：（singer） 主要数据展示和页面跳转。
+
+新碟上架（album）主要数据展示和页面跳转。
+
+我的音乐（myplaylist）携带cooking参数请求，路由守卫评论等功能。
+
+搜索页面（search）相关歌手，单曲，歌单，专辑等。（功能未完善）
+
+## 第二部分：组件页面
+
+播放器组件：（play）上一首，下一首功能，控制音量功能，歌词滚动功能，删除，添加歌曲功能，播放器显示和隐藏交互功能，进度条功能等等。（功能未完善）
+
+歌单列表页面（playlist） 评论功能，播放前10首功能等等。
+
+单曲详情页面（songAsg）评论功能，页面互相跳转，展示数据等功能。
+
+mv详情页面（mvAsg）评论功能，播放视频功能，展示数据等功能。
+
+专辑详情页面（albumAsg）评论功能，播放等功能
+
+歌手详情页面（singerAsg） table栏切换并且请求不同数据，mv，单曲等等功能。
+
+电台节目详情（djShow） 评论功能，数据展示等功能
+
+电台节目列表功能（djList）评论功能，页面互相跳转功能，数据展示等功能。
+
+# 本次项目心得：
+
+刚开始写这个项目的时候，没有好好的构思，网易云相关的功能数据没有好好研究，导致前面写的页面数据有些冗余，前面结构有些混乱。但是后面不断通过学习，和好好构思，结构慢慢明朗起来。
+
+页面结构完全基本完全自己手写，也对页面布局也逐渐得心应手。
+
+个人最主要的感受是，前面的代码如果好好构思，封装。后面的活也越来越得心应手，基本可以复制粘贴前面代码实现功能。
+
+这次项目完成基本功能。后面也会不断完善相关的功能。
+
+
+
+
+
+
+
+
+
